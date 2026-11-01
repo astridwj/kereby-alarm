@@ -1,0 +1,32 @@
+{
+ "broken_alerted": false,
+ "cases": [
+  "07838e10-aba0-4b5c-b721-5bf2a37e7b73",
+  "1a27dd29-3172-434c-b4f4-880baa8ae12c",
+  "2bece092-d340-4f73-a0ff-424fbaf3ee9c",
+  "2ff95cd9-1400-4d8c-928b-3b91e1e36cea",
+  "3a1a63e5-73be-46e6-a086-713f29bb1ffa",
+  "3d6e3dc0-5ed1-4a6a-8c47-579eecc4e05f",
+  "4a12773b-1d51-495a-8406-c4ce604e8d38",
+  "53f2a2b6-aefc-472d-ac2e-664ba32ac6c1",
+  "6c0ed0c5-006e-4cf5-986d-ba04e5b984ea",
+  "77050189-cc64-40e1-b3b9-655c3cc16012",
+  "7d90613b-3397-426e-85ad-8f2447790b24",
+  "92ebfe0b-9d9c-4cf3-9917-94a120967e26",
+  "9acd13c8-83ab-4e50-940d-0af148c23b7e",
+  "9b568238-5cbe-4344-8de5-6bcde32085be",
+  "a034a483-8775-4ff9-aac3-96a06a492647",
+  "bffcbd2f-4086-4268-8d82-3c1f20d9e840",
+  "c10af46b-cca3-4a4b-988d-d3479b09514d",
+  "c217bc97-7d57-4e66-b394-d1837d5fdd2c",
+  "ce6f6e19-a64f-4532-92f6-3c05a50ff0d5",
+  "e49bae37-9b58-4fbe-aa74-2581d3cdfd05",
+  "f5a780dd-7f18-42ad-8557-ed2dc01c062a"
+ ],
+ "slugs": [
+  "drogdensgade-4-5-2300-kobenhavn-s",
+  "norrebrogade-174-1-th-2200-kobenhavn-n",
+  "norrebrogade-174-5-tv-2200-kobenhavn-n",
+  "strandboulevarden-61-5-th-2100-kobenhavn"
+ ]
+}
