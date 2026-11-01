@@ -59,3 +59,64 @@ def load_state():
         with open(STATE_FILE, encoding="utf-8") as f:
             return json.load(f)
     except FileNotFoundError:
+                return None
+
+
+def save_state(state):
+    with open(STATE_FILE, "w", encoding="utf-8") as f:
+        json.dump(state, f, indent=1, ensure_ascii=False, sort_keys=True)
+        f.write("\n")
+
+
+def main():
+    state = load_state()
+    try:
+        html = fetch()
+        slugs, cases = parse(html)
+    except Exception as e:  # netvaerksfejl e.l.
+        print("Kunne ikke hente siden:", e)
+        slugs, cases = set(), set()
+
+    if not slugs and not cases:
+        # Siden kunne ikke hentes eller har skiftet design. Advar én gang.
+        print("Fandt ingen boliger paa siden.")
+        if state is not None and not state.get("broken_alerted"):
+            notify("Kereby-overvågning virker ikke",
+                   "Scriptet kunne ikke læse boligerne. Tjek siden selv, og få scriptet rettet.",
+                   priority="default")
+            state["broken_alerted"] = True
+            save_state(state)
+        return
+
+    if state is None:
+        save_state({"slugs": sorted(slugs), "cases": sorted(cases), "broken_alerted": False})
+        notify("Kereby-overvågning er sat op ✅",
+               f"Jeg holder øje med {len(cases)} boliger, heraf {len(slugs)} ledige. "
+               "Du får besked, når der kommer nye.",
+               priority="default")
+        print("Foerste koersel - state gemt.")
+        return
+
+    new_slugs = sorted(slugs - set(state.get("slugs", [])))
+    new_cases = cases - set(state.get("cases", []))
+
+    for slug in new_slugs:
+        notify("Ny ledig bolig hos Kereby!", pretty(slug), link=f"https://kereby.dk/bolig/{slug}/", priority="urgent")
+        print("Ny ledig:", slug)
+
+    if new_cases and not new_slugs:
+        notify("Ny bolig på Kerebys liste",
+               f"{len(new_cases)} ny(e) bolig(er) på listen – måske allerede reserveret. Tryk for at se.",
+               priority="default")
+        print("Nye sager uden link:", new_cases)
+
+    # Husk alt vi nogensinde har set, saa en bolig der forsvinder og kommer igen ikke giver dobbelt-besked
+    state["slugs"] = sorted(set(state.get("slugs", [])) | slugs)
+    state["cases"] = sorted(set(state.get("cases", [])) | cases)
+    state["broken_alerted"] = False
+    save_state(state)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
